@@ -1,0 +1,105 @@
+{% extends 'apps/base.html' %}
+{% block nimadir %}
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Login Register</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="page-section mb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+                    <!-- Login Form s-->
+                    <form action="{% url 'login_register' %}" method="POST">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <h8 style="color: red;">{{ error }}</h8>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="login-form">
+                            <h4 class="login-title">Login</h4>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-20">
+                                    <label>Username</label>
+                                    <input class="mb-0" name="username" type="text" placeholder="Username">
+                                </div>
+                                <div class="col-12 mb-20">
+                                    <label>Password</label>
+                                    <input class="mb-0" name="password" type="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
+                                        <input type="checkbox" id="remember_me">
+                                        <label for="remember_me">Remember me</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
+                                    <a href="#"> Forgotten pasward?</a>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="register-button mt-0">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger" style="color: red;">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
+                        <div class="login-form">
+                            <h4 class="login-title">Register</h4>
+                            <div class="row">
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>First Name</label>
+                                    <input class="mb-0" name="first_name" type="text" placeholder="First Name">
+                                </div>
+                                <div class="col-md-6 col-12 mb-20">
+                                    <label>Last Name</label>
+                                    <input class="mb-0" name="last_name" type="text" placeholder="Last Name">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Email Address*</label>
+                                    <input class="mb-0" name="email" type="email" placeholder="Email Address">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Username*</label>
+                                    <input class="mb-0" name="username" type="text" placeholder="Username   ">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Password</label>
+                                    <input class="mb-0" name="password" type="password" placeholder="Password">
+                                </div>
+                                <div class="col-md-6 mb-20">
+                                    <label>Confirm Password</label>
+                                    <input class="mb-0" name="confirm_password" type="password"
+                                           placeholder="Confirm Password">
+                                </div>
+                                <div class="col-12">
+                                    <button class="register-button mt-0">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
