@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-djm%&xzveg*8fom!t(9krqpy^6#jyvg!bcfazs!82b#1!v**0g'
@@ -18,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.apps.AppsConfig',
-    'ckeditor'
+    'ckeditor',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -55,14 +61,7 @@ WSGI_APPLICATION = 'root.wsgi.application'
 AUTH_USER_MODEL = 'apps.User'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '1',
-        'HOST': 'localhost',
-        'PORT': 5432
-    }
+    'default': dj_database_url.config(default=os.getenv('DB_URL'))
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -319,10 +318,9 @@ LOGOUT_REDIRECT_URL = '/admin'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'fazliddinismoilov234@gmail.com'
 EMAIL_HOST_PASSWORD = 'elcfbrkhwhrghacn'
-
-
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'

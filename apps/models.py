@@ -44,8 +44,10 @@ class Blog(Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super().save(force_insert, force_update, using, update_fields)
         emails: list = Newsletter_emails.objects.values_list('email', flat=True)
+        start = time.time()
         task_send_email.delay("Yangi blog qoshildi", self.name, list(emails))
-
+        end = time.time()
+        print(end - start, 's -- vaqt ')
     def __str__(self):
         return self.name
 
